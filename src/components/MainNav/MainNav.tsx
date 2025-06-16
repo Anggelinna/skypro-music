@@ -1,11 +1,9 @@
-"use  client" 
+"use client";
+
 import { useState } from "react";
 import styles from "./mainnav.module.css";
-import Link from "next/link";
 import Image from "next/image";
-
-
-//import { useState } from "react";
+import Link from "next/link";
 
 const MainNav = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
