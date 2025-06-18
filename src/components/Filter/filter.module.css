@@ -19,8 +19,9 @@
   margin-top: 10px;
   width: max-content;
   max-height: 305px;
-  /*-webkit-box-sizing: border-box;*/
+ /* -webkit-box-sizing: border-box; */
   padding: 34px;
+  border-radius: 12px;
   background: #313131;
   overflow-y: scroll;
 }
