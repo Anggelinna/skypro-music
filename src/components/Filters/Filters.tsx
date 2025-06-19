@@ -2,7 +2,7 @@
 
 import styles from "./filters.module.css";
 import { useState } from "react";
-import Filter from "../Filter/Filter";
+import Filter from "@/components/Filter/Filter";
 
 const Filters = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
