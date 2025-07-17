@@ -16,8 +16,8 @@ const Signin = () => {
                     //className={styles.sidebar__img}
                     src="/img/logo_modal.png"
                     alt="logo"
-                    //width={250}
-                    //height={170}
+                    width={250}
+                    height={170}
                   />
                 </div>
               </a>
