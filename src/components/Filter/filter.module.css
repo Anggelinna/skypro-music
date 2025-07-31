@@ -12,8 +12,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: 1px solid rgba(154, 72, 241, 1);
-  background: rgba(182, 114, 255, 1);
+}
+.filter__button_active {
+  border-color: #b672ff;
+  color: #b672ff;
 }
 
 .filter__dropdown {
@@ -69,5 +71,4 @@
 .filter__button_group {
   position: relative;
   cursor: pointer;
-  
 }

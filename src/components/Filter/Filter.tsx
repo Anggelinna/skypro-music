@@ -13,7 +13,11 @@ type FilterProps = {
 const Filter = ({ name, onClick, activeFilter, filterName }: FilterProps) => {
   return (
     <div className={styles.filter__button_group}>
-      <div className={styles.filter__button} onClick={() => onClick(name)}>
+      <div 
+        className={`${styles.filter__button} ${
+          activeFilter === name ? styles.filter__button_active : "" }`}
+        onClick={() => onClick(name)}
+      >
         {name}
       </div>
       {activeFilter === name && (
