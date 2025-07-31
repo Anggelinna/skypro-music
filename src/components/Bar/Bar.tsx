@@ -41,7 +41,7 @@ const Bar = () => {
                   <div className={styles.trackPlay__contain}>
                     <div className={styles.trackPlay__image}>
                       <svg className={styles.trackPlay__svg}>
-                        <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                        <use xlinkHref="/img/icon/Group.svg#icon-note"></use>
                       </svg>
                     </div>
                     <div className={styles.trackPlay__author}>
