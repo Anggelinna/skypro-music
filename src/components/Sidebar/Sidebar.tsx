@@ -13,7 +13,7 @@ const Sidebar = () => {
           <p className={styles.sidebar__personalName}>Sergey.Ivanov</p>
           <div className={styles.sidebar__icon}>
             <svg>
-              <use xlinkHref="/img/icon/sprite.svg#logout"></use>
+              <use xlinkHref="/img/icon/sprite.svg"></use>
             </svg>
           </div>
 
