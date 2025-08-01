@@ -29,11 +29,9 @@
 }
 
 .sidebar__icon {
-  width: 43px;
-  height: 43px;
-  background-color: #313131;
-  border-radius: 50%;
-  cursor: pointer;
+  width: 40;
+  height: 40;
+  color: 1px solid rgba(255, 255, 255, 1)
 }
 
 .sidebar__block {

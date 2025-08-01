@@ -10,10 +10,10 @@ const Sidebar = () => {
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
   
-          <p className={styles.sidebar__personalName}>Sergey.Ivanov</p>
+          <p className={styles.sidebar__personalName}></p>
           <div className={styles.sidebar__icon}>
             <svg>
-              <use xlinkHref="/img/icon/sprite.svg"></use>
+              <use xlinkHref="/img/icon/Group1.svg"></use>
             </svg>
           </div>
 
