@@ -18,8 +18,8 @@ const Track = ({ title, subTitle, author, album, time }: TrackProps) => {
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
             <svg className={styles.track__titleSvg}>
-              <use xlinkHref="/img/icon/Group.svg"></use>
-              <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+               <use xlinkHref="/img/icon/Group.svg"></use>
+              <use xlinkHref="/img/icon/sprite.svg"></use>
             </svg>
           </div>
           <div>
@@ -41,7 +41,7 @@ const Track = ({ title, subTitle, author, album, time }: TrackProps) => {
         </div>
         <div className={styles.track__time}>
           <svg className={styles.track__timeSvg}>
-            <use xlinkHref="/img/icon/Vector.svg#icon-like"></use>
+            <use xlinkHref="/img/icon/Vector.svg"></use>
           </svg>
           <span className={styles.track__timeText}>{time}</span>
         </div>

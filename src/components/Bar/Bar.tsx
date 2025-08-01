@@ -36,12 +36,12 @@ const Bar = () => {
                     </svg>
                   </div>
                 </div>
-
+ 
                 <div className={styles.player__trackPlay}>
                   <div className={styles.trackPlay__contain}>
                     <div className={styles.trackPlay__image}>
                       <svg className={styles.trackPlay__svg}>
-                        <use xlinkHref="/img/icon/Group.svg#icon-note"></use>
+                        <use xlinkHref="/img/icon/Group.svg"></use>
                       </svg>
                     </div>
                     <div className={styles.trackPlay__author}>
