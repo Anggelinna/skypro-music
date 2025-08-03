@@ -6,6 +6,14 @@
   padding: 20px 40px 20px 111px;
 }
 
+.centerblock__search_btn {
+  position: relative;
+}
+
+.centerblock__search_btn:not(:last-child) {
+  margin-right: 10px;
+}
+
 .centerblock__search {
   width: 100%;
   border-bottom: 1px solid #4e4e4e;
@@ -127,6 +135,13 @@
   text-transform: uppercase;
 }
 
+.playlistTitle__svg {
+  width: 12px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+}
+
 .col01 {
   width: 447px;
 }
@@ -142,11 +157,4 @@
 .col04 {
   width: 60px;
   text-align: end;
-}
-
-.playlistTitle__svg {
-  width: 12px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
 }
