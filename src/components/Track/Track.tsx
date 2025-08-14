@@ -33,7 +33,7 @@ const Track = (track: TrackType) => {
                 className={classNames({
                   [styles.track__titleImg]: isPlaying,
                 })}
-                src="/img/icon/current.svg"
+                src="/img/icon/Group.svg"
                 alt={track.name}
               />
             ) : (

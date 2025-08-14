@@ -12,13 +12,7 @@ const SignUp = () => {
             <form className={styles.modal__form}>
               <Link href="/music/main">
                 <div className={styles.modal__logo}>
-                  <Image
-                  //className={styles.sidebar__img}
-                  src="/img/logo_modal.png"
-                  alt="logo"
-                  width={250}
-                  height={170}
-                 />
+                  <img src="/img/logo_modal.png" alt="logo" />
                 </div>
               </Link>
               <input
