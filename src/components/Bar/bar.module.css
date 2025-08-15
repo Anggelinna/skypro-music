@@ -52,6 +52,17 @@
   justify-content: flex-start;
 }
 
+.bar__volumeBlock {
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 92px 0 0;
+}
+
 .player__controls {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -77,18 +88,6 @@
   align-items: center;
 }
 
-.player__btnPlay {
-  margin-right: 23px;
-}
-
-.btn {
-  cursor: pointer;
-}
-
-.player__btnRepeat {
-  margin-right: 24px;
-}
-
 .player__btnPrev {
   margin-right: 23px;
 }
@@ -96,6 +95,10 @@
 .player__btnPrevSvg {
   width: 15px;
   height: 14px;
+}
+
+.player__btnPlay {
+  margin-right: 23px;
 }
 
 .player__btnPlaySvg {
@@ -116,23 +119,8 @@
   stroke: #d9d9d9;
 }
 
-.btnIcon:hover svg {
-  fill: transparent;
-  stroke: #acacac;
-  cursor: pointer;
-}
-
-.btnIcon:active svg {
-  fill: transparent;
-  stroke: #ffffff;
-  cursor: pointer;
-}
-
-.btnIcon:active .trackPlay__likeSvg,
-.btnIcon:active .trackPlay__dislikeSvg {
-  fill: #696969;
-  stroke: #ffffff;
-  cursor: pointer;
+.player__btnRepeat {
+  margin-right: 24px;
 }
 
 .player__btnRepeatSvg {
@@ -174,7 +162,7 @@
   display: grid;
   -ms-grid-columns: auto 1fr;
   grid-template-columns: auto 1fr;
-  grid-template-areas: 'image author' 'image album';
+  grid-template-areas: "image author" "image album";
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -201,8 +189,8 @@
 }
 
 .trackPlay__svg {
-  width: 20px;
-  height: 19px;
+  width: 18px;
+  height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
 }
@@ -238,12 +226,23 @@
   color: #ffffff;
 }
 
+.trackPlay__likeDis {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 26%;
+}
+
 .trackPlay__like,
 .trackPlay__dislike {
   padding: 5px;
-}
-.trackPlay__dislike {
-  margin-left: 28.5px;
 }
 
 .trackPlay__likeSvg {
@@ -253,22 +252,15 @@
   stroke: #696969;
 }
 
+.trackPlay__dislike {
+  margin-left: 28.5px;
+}
+
 .trackPlay__dislikeSvg {
   width: 14.34px;
   height: 13px;
   fill: transparent;
   stroke: #696969;
-}
-
-.bar__volumeBlock {
-  width: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0 92px 0 0;
 }
 
 .volume__content {
@@ -330,4 +322,40 @@
   border-radius: 50%;
   position: relative;
   margin-top: -7px;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.btnIcon:hover svg {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+
+.btnIcon:active svg {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+.btnIcon:active .trackPlay__likeSvg,
+.btnIcon:active .trackPlay__dislikeSvg {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+.btn-text {
+  &:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+  }
+  &:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+  }
 }

@@ -1,7 +1,7 @@
 import { data } from "../data";
 import { TrackType } from "../sharedTypes/sharedTypes";
 
-export function dateFormat(date: string) {
+export const dateFormat = (date: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "2-digit",
@@ -9,19 +9,26 @@ export function dateFormat(date: string) {
   };
   const formattedDate = new Date(date).toLocaleDateString("ru-RU", options);
   return formattedDate;
-}
+};
 
-export function formatTime(time: number) {
+export const formatTime = (time: number) => {
   const minutes = Math.floor(time / 60);
-  const inputSeconds = Math.floor(time & 60);
-  const outputSeconds = inputSeconds < 10 ? `0${inputSeconds}` : inputSeconds;
-  return `${minutes}:${outputSeconds}`;
-}
+  const seconds = Math.floor(time % 60);
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  return `${formattedMinutes}:${formattedSeconds}`;
+};
 
-export function getUniqueValuesByKey(
+export const getTimePanel = (currentTime: number, totalTime: number) => {
+  const current = formatTime(currentTime);
+  const total = formatTime(totalTime);
+  return `${current} / ${total}`;
+};
+
+export const getUniqueValuesByKey = (
   arr: TrackType[],
   key: keyof TrackType
-): string[] {
+): string[] => {
   // Используем Set для хранения уникальных значений
   const uniqueValues = new Set<string>();
 
@@ -45,4 +52,4 @@ export function getUniqueValuesByKey(
 
   // Преобразуем Set обратно в массив и возвращаем
   return Array.from(uniqueValues);
-}
+};
