@@ -8,7 +8,7 @@ const TrackList = () => {
   return (
     <div className={styles.content__playlist}>
       {data.map((track: TrackType) => (
-        <Track key={track._id} {...track} />
+        <Track key={track._id} {...track} /> 
       ))}
     </div>
   );

@@ -20,25 +20,25 @@ const Track = (track: TrackType) => {
 
   const isCurrentTrack = currentTrack?._id === track._id;
 
+  const handleTrackClick = () => {
+    dispatch(setCurrentTrack(track));
+  };
+
   return (
     <div
       className={styles.playlist__item}
-      onClick={() => dispatch(setCurrentTrack(track))}
+      onClick={handleTrackClick}
     >
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
             {isCurrentTrack ? (
-              <img
-                className={classNames({
-                  [styles.track__titleImg]: isPlaying,
-                })}
-                src="/img/icon/Group.svg"
-                alt={track.name}
-              />
+              <div className={classNames(styles.track__currentIndicator, {
+                [styles.track__currentIndicatorPlaying]: isPlaying,
+              })} />
             ) : (
               <svg className={styles.track__titleSvg}>
-                <use xlinkHref={`/img/icon/sprite.svg#icon-note`}></use>
+                <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
               </svg>
             )}
           </div>
