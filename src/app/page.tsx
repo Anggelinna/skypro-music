@@ -1,10 +1,12 @@
 import './page.css';
 import styles from './page.module.css'
-//import classNames from 'classnames';
+import classNames from 'classnames';
 import Bar from '@/components/Bar/Bar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import CenterBlock from '@/components/CenterBlock/CenterBlock';
 import MainNav from '@/components/MainNav/MainNav';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
