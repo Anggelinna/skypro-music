@@ -7,4 +7,5 @@
   -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: auto;
+  max-height: 65vh;
 }

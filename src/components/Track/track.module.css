@@ -1,28 +1,18 @@
-.track__currentIndicator {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #9A48F1;
-  transition: all 0.3s ease;
-}
-
-.track__currentIndicatorPlaying {
-  animation: pulse 1.5s infinite ease-in-out;
-  box-shadow: 0 0 0 5px rgba(154, 72, 241, 0.4);
-}
-
-@keyframes pulse {
+@keyframes glowPulse {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(154, 72, 241, 0.7);
-  }
-  70% {
     transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(154, 72, 241, 0);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    opacity: 0.9;
   }
   100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(154, 72, 241, 0);
+    transform: scale(1);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
+    opacity: 1;
   }
 }
 
@@ -145,6 +135,7 @@
   margin-right: 17px;
   fill: transparent;
   stroke: #696969;
+  cursor: pointer;
 }
 
 .track__timeText {
