@@ -1,29 +1,48 @@
-.track__currentIndicator {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #9A48F1;
-  transition: all 0.3s ease;
-}
-
-.track__currentIndicatorPlaying {
-  animation: pulse 1.5s infinite ease-in-out;
-  box-shadow: 0 0 0 5px rgba(154, 72, 241, 0.4);
+@keyframes glowPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(187, 134, 252, 0.8);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    opacity: 1;
+  }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(154, 72, 241, 0.7);
+    opacity: 0.7;
   }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(154, 72, 241, 0);
+  50% {
+    opacity: 1;
   }
   100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(154, 72, 241, 0);
+    opacity: 0.7;
   }
+}
+
+.track__playingDot {
+  width: 16px;
+  height: 16px;
+  background-color: #bb86fc; /* Фиолетовый цвет */
+  border-radius: 50%;
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.track__currentDot {
+  width: 16px;
+  height: 16px;
+  background-color: #bb86fc; /* Фиолетовый цвет */
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .playlist__item {
@@ -154,10 +173,4 @@
   line-height: 24px;
   text-align: right;
   color: #696969;
-}
-
-.track__titleImg {
-  animation: glowPulse 2s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 50%;
 }

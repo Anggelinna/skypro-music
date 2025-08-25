@@ -1,14 +1,21 @@
 "use client";
-
 import Link from "next/link";
 import styles from "./track.module.css";
 import { useAppSelector, useAppDispatch } from "@/store/store";
-import { setCurrentTrack } from "@/store/features/trackSlice";
+import {
+  setCurrentTrack,
+  setCurrentPlaylist,
+} from "@/store/features/trackSlice";
 import { TrackType } from "@/sharedTypes/sharedTypes";
-import { formatTime } from "../../utils/helper";
+import { formatTime } from "@utils/helper";
 import classNames from "classnames";
 
-const Track = (track: TrackType) => {
+type TrackProps = {
+  track: TrackType;
+  playList: TrackType[];
+};
+
+const Track = ({ track, playList }: TrackProps) => {
   const dispatch = useAppDispatch();
   const isPlaying = useAppSelector(
     (state) => state.tracks.currentTrack.isPlaying
@@ -20,25 +27,29 @@ const Track = (track: TrackType) => {
 
   const isCurrentTrack = currentTrack?._id === track._id;
 
-  const handleTrackClick = () => {
+  const handlerClickCurrentTrack = () => {
     dispatch(setCurrentTrack(track));
+    dispatch(setCurrentPlaylist(playList));
   };
 
   return (
-    <div
-      className={styles.playlist__item}
-      onClick={handleTrackClick}
-    >
+    <div className={styles.playlist__item} onClick={handlerClickCurrentTrack}>
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
             {isCurrentTrack ? (
-              <div className={classNames(styles.track__currentIndicator, {
-                [styles.track__currentIndicatorPlaying]: isPlaying,
-              })} />
+              <>
+                {isPlaying ? (
+                  // Анимированная фиолетовая точка для играющего трека
+                  <div className={styles.track__playingDot}></div>
+                ) : (
+                  // Статичная фиолетовая точка для текущего, но не играющего трека
+                  <div className={styles.track__currentDot}></div>
+                )}
+              </>
             ) : (
               <svg className={styles.track__titleSvg}>
-                <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                <use xlinkHref={`/img/icon/sprite.svg#icon-note`}></use>
               </svg>
             )}
           </div>
@@ -70,5 +81,4 @@ const Track = (track: TrackType) => {
     </div>
   );
 };
-
 export default Track;

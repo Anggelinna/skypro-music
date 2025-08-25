@@ -10,3 +10,11 @@ export type TrackType = {
   track_file: string;
   stared_user: [];
 };
+
+export type SelectionType = {
+  _id: number;
+  name: string;
+  items: number[];
+  owner: number[];
+  __v: number;
+};
