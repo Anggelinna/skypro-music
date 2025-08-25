@@ -1,7 +1,6 @@
 import styles from "./signin.module.css";
 import classNames from "classnames";
 import Link from "next/link";
-//import Image from "next/image";
 
 const Signin = () => {
   return (
