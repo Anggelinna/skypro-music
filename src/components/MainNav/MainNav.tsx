@@ -4,12 +4,29 @@ import { useState } from "react";
 import styles from "./mainnav.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useAppSelector } from "@/store/store";
+import { clearUser } from "@/store/features/authSlice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const MainNav = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const { accessToken } = useAppSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    if (!accessToken) {
+      router.push("/auth/signin");
+    } else {
+      router.push("/music/main");
+    }
   };
 
   return (
@@ -38,15 +55,17 @@ const MainNav = () => {
                 Главное
               </Link>
             </li>
+            {accessToken && (
+              <li className={styles.menu__item}>
+                <Link href="/music/favorite" className={styles.menu__link}>
+                  Мой плейлист
+                </Link>
+              </li>
+            )}
             <li className={styles.menu__item}>
-              <Link href="#" className={styles.menu__link}>
-                Мой плейлист
-              </Link>
-            </li>
-            <li className={styles.menu__item}>
-              <Link href="/auth/signin" className={styles.menu__link}>
-                Войти
-              </Link>
+              <div onClick={handleLogout} className={styles.menu__link}>
+                {accessToken ? "Выйти" : "Войти"}
+              </div>
             </li>
           </ul>
         )}

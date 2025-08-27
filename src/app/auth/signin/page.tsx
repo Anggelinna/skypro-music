@@ -8,6 +8,12 @@ import { useForm, SubmitHandler, set } from "react-hook-form";
 import { urerSignIn, userGetToken } from "@/services/auth/authApi";
 import { useRouter } from "next/navigation";
 import { Axios, AxiosError } from "axios";
+import {
+  setAccessToken,
+  setRefreshToken,
+  setUserName,
+} from "@/store/features/authSlice";
+import { useDispatch } from "react-redux";
 
 type Inputs = {
   login: string;
@@ -15,6 +21,7 @@ type Inputs = {
 };
 
 export default function Signin() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const router = useRouter();
@@ -32,15 +39,18 @@ export default function Signin() {
     urerSignIn({ email: watch("login"), password: watch("password") })
       .then((res) => {
         if (res.status.toString().startsWith("2")) {
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("username", res.data.username);
-          localStorage.setItem("_id", res.data._id.toString());
+          // localStorage.setItem("email", res.data.email);
+          // localStorage.setItem("username", res.data.username);
+          // localStorage.setItem("_id", res.data._id.toString());
+          dispatch(setUserName(res.data.username)); 
           userGetToken({
             email: watch("login"),
             password: watch("password"),
           }).then((token) => {
             console.log("Токен получен:", token);
-            localStorage.setItem("token", token.access);
+            // localStorage.setItem("token", token.access);
+            dispatch(setAccessToken(token.access));
+            dispatch(setRefreshToken(token.refresh));
           });
           router.push("/music/main");
         }
@@ -60,7 +70,7 @@ export default function Signin() {
           if (error.request) {
             console.error("Ошибка запроса:", error.request);
             setErrorMessage(
-              "Отсутствует ответ от сервера. Пожалуйста, проверьте подключение к интернету."
+              "Не найдено активной учетной записи с указанными данными."
             );
           } else {
             console.error("Ошибка настройки:", error.message);
