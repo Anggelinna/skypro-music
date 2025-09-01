@@ -19,6 +19,12 @@
   padding: 12px 0 15px 0;
 }
 
+.sidebar__upperblock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .sidebar__personalName {
   font-style: normal;
   font-weight: 400;
@@ -29,9 +35,11 @@
 }
 
 .sidebar__icon {
-  width: 40;
-  height: 40;
-  color: 1px solid rgba(255, 255, 255, 1)
+  width: 43px;
+  height: 43px;
+  /*background-color: #313131;*/
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .sidebar__block {
@@ -77,6 +85,6 @@
 }
 
 .sidebar__img {
-  width: 250;
-  height: 150;
+  width: 100%;
+  height: auto;
 }

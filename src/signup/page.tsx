@@ -1,7 +1,6 @@
 import styles from "./signup.module.css";
 import classNames from "classnames";
 import Link from "next/link";
-import Image from "next/image";
 
 const SignUp = () => {
   return (
