@@ -70,7 +70,7 @@ export default function Signin() {
           if (error.request) {
             console.error("Ошибка запроса:", error.request);
             setErrorMessage(
-              "Не найдено активной учетной записи с указанными данными."
+              "Отсутствует ответ от сервера. Пожалуйста, проверьте подключение к интернету."
             );
           } else {
             console.error("Ошибка настройки:", error.message);
