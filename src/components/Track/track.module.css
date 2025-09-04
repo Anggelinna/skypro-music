@@ -159,11 +159,12 @@
 }
 
 .track__timeSvg {
-  width: 16px;
-  height: 14px;
+  width: 14px;
+  height: 12px;
   margin-right: 17px;
   fill: transparent;
   stroke: #696969;
+  cursor: pointer;
 }
 
 .track__timeText {
@@ -173,4 +174,10 @@
   line-height: 24px;
   text-align: right;
   color: #696969;
+}
+
+.track__titleImg {
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 50%;
 }
