@@ -5,15 +5,9 @@ import styles from "./signup.module.css";
 import classNames from "classnames";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { userSignUp, userGetToken } from "@/services/auth/authApi";
+import { userSignUp } from "@/services/auth/authApi";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
-import {
-  setUserName,
-  setAccessToken,
-  setRefreshToken,
-} from "@/store/features/authSlice";
-import { useDispatch } from "react-redux";
 
 type Inputs = {
   login: string;
@@ -34,7 +28,6 @@ export default function SignUp() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = () => {
-    const dispatch = useDispatch();
     setIsLoading(true);
     setErrorMessage(null);
     userSignUp({
@@ -44,15 +37,9 @@ export default function SignUp() {
     })
       .then((res) => {
         if (res.status.toString().startsWith("2")) {
-          dispatch(setUserName(res.data.username));
-          userGetToken({
-            email: watch("login"),
-            password: watch("password"),
-          }).then((token) => {
-            console.log("Токен получен:", token);
-            dispatch(setAccessToken(token.access));
-            dispatch(setRefreshToken(token.refresh));
-          });
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("username", res.data.username);
+          localStorage.setItem("_id", res.data._id.toString());
           router.push("/music/main");
         }
         if (res.status.toString().startsWith("4")) {

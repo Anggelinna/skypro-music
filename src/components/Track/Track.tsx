@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import styles from "./track.module.css";
 import { useAppSelector, useAppDispatch } from "@/store/store";
@@ -40,9 +39,9 @@ const Track = ({ track, playList }: TrackProps) => {
 
   const likeIcon = () => {
     if (!accessToken) {
-      return "dislike-notauth";
+      return "dislike-notauth"; // зачеркнутое сердечко для неавторизованных
     } else {
-      return isLike ? "like" : "dislike";
+      return isLike ? "like" : "dislike"; // фиолетовое для лайкнутых, обычное для нелайкнутых
     }
   };
 
@@ -52,7 +51,7 @@ const Track = ({ track, playList }: TrackProps) => {
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
             {isCurrentTrack ? (
-                <>
+              <>
                 {isPlaying ? (
                   // Анимированная фиолетовая точка для играющего трека
                   <div className={styles.track__playingDot}></div>
@@ -85,13 +84,18 @@ const Track = ({ track, playList }: TrackProps) => {
         </div>
         <div className={styles.track__time}>
           <svg
-            className={styles.track__timeSvg}
+            className={classNames(styles.track__timeSvg, {
+              [styles.track__timeSvgLiked]: isLike && accessToken,
+              [styles.track__timeSvgNotAuth]: !accessToken,
+            })}
             onClick={(e) => {
               e.stopPropagation();
-              toggleLike();
+              if (accessToken) {
+                toggleLike();
+              }
             }}
           >
-            <use href={`/img/icon/sprite.svg#icon-${likeIcon()}`}></use>
+            <use xlinkHref={`/img/icon/sprite.svg#icon-${likeIcon()}`}></use>
           </svg>
           <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}
@@ -102,4 +106,4 @@ const Track = ({ track, playList }: TrackProps) => {
   );
 };
 
-export default Track;
+export default Track; 

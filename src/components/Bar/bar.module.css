@@ -384,3 +384,27 @@
 .bar__timeBlock {
   color: #ffffff;
 }
+
+.trackPlay__dislikeLiked .trackPlay__dislikeSvg {
+  stroke: #b672ff !important;
+  fill: #b672ff !important;
+}
+
+.trackPlay__dislikeNotAuth .trackPlay__dislikeSvg {
+  stroke: #696969 !important;
+  cursor: not-allowed !important;
+}
+
+.trackPlay__dislike:hover .trackPlay__dislikeSvg {
+  stroke: #acacac !important;
+}
+
+.trackPlay__dislikeLiked:hover .trackPlay__dislikeSvg {
+  stroke: #9a48f1 !important;
+  fill: #9a48f1 !important;
+}
+
+.trackPlay__dislikeNotAuth:hover .trackPlay__dislikeSvg {
+  stroke: #696969 !important;
+  cursor: not-allowed !important;
+}
