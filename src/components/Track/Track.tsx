@@ -37,11 +37,12 @@ const Track = ({ track, playList }: TrackProps) => {
     dispatch(setCurrentPlaylist(playList));
   };
 
+  // Используем обычную иконку dislike для неавторизованных, но с зачеркиванием через CSS
   const likeIcon = () => {
     if (!accessToken) {
-      return "dislike-notauth"; // зачеркнутое сердечко для неавторизованных
+      return "dislike"; // используем обычную иконку dislike
     } else {
-      return isLike ? "like" : "dislike"; // фиолетовое для лайкнутых, обычное для нелайкнутых
+      return isLike ? "like" : "dislike";
     }
   };
 
@@ -53,10 +54,8 @@ const Track = ({ track, playList }: TrackProps) => {
             {isCurrentTrack ? (
               <>
                 {isPlaying ? (
-                  // Анимированная фиолетовая точка для играющего трека
                   <div className={styles.track__playingDot}></div>
                 ) : (
-                  // Статичная фиолетовая точка для текущего, но не играющего трека
                   <div className={styles.track__currentDot}></div>
                 )}
               </>
@@ -86,7 +85,7 @@ const Track = ({ track, playList }: TrackProps) => {
           <svg
             className={classNames(styles.track__timeSvg, {
               [styles.track__timeSvgLiked]: isLike && accessToken,
-              [styles.track__timeSvgNotAuth]: !accessToken,
+              [styles.track__timeSvgNotAuth]: !accessToken, // этот класс добавит зачеркивание
             })}
             onClick={(e) => {
               e.stopPropagation();
@@ -106,4 +105,4 @@ const Track = ({ track, playList }: TrackProps) => {
   );
 };
 
-export default Track; 
+export default Track;

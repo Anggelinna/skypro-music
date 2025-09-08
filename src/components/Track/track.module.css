@@ -176,12 +176,43 @@
   stroke: #9a48f1 !important;
   fill: #9a48f1 !important;
 }
+
+.track__timeSvgNotAuth {
+  position: relative;
+  stroke: #696969 !important;
+  cursor: not-allowed !important;
+}
+
+.track__timeSvgNotAuth::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #696969;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
 .track__timeSvgLiked {
-  stroke: #b672ff !important; /* Фиолетовый для лайкнутых */
+  stroke: #b672ff !important;
   fill: #b672ff !important;
 }
 
-.track__timeSvgNotAuth {
-  stroke: #696969 !important; /* Серый для неавторизованных */
-  cursor: not-allowed !important; /* Курсор "недоступно" */
+.track__timeSvg:hover {
+  stroke: #acacac !important;
+}
+
+.track__timeSvgLiked:hover {
+  stroke: #9a48f1 !important;
+  fill: #9a48f1 !important;
+}
+
+.track__timeSvgNotAuth:hover {
+  stroke: #696969 !important;
+}
+
+.track__timeSvgNotAuth:hover::after {
+  background-color: #696969;
 }

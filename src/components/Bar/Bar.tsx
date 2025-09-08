@@ -14,7 +14,6 @@ import {
 import { getTimePanel } from "@utils/helper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useLikeTrack } from "@/hooks/useLikeTracks";
-import { TrackType } from "@/sharedTypes/sharedTypes";
 
 const Bar = () => {
   const [currentTime, setCurrentTime] = useState(0);
@@ -149,9 +148,16 @@ const Bar = () => {
 
   const likeIcon = () => {
     if (!accessToken) {
-      return "dislike-notauth";
+      return "dislike"; // используем обычную иконку dislike
     } else {
       return isLike ? "like" : "dislike";
+    }
+  };
+
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (accessToken) {
+      toggleLike();
     }
   };
 
@@ -163,7 +169,6 @@ const Bar = () => {
         loop={isLoop}
         autoPlay
         onTimeUpdate={onTimeUpdate}
-        // controls
         onLoadedMetadata={onLoadedMetadata}
         onEnded={nextTrack}
       ></audio>
@@ -252,12 +257,17 @@ const Bar = () => {
                   </div>
                 </div>
 
-                <div className={styles.trackPlay__dislike} onClick={toggleLike}>
+                <div className={styles.trackPlay__likeDis}>
                   <div
                     className={classNames(
                       styles.trackPlay__dislike,
-                      styles.btnIcon
+                      styles.btnIcon,
+                      {
+                        [styles.trackPlay__dislikeLiked]: isLike && accessToken,
+                        [styles.trackPlay__dislikeNotAuth]: !accessToken,
+                      }
                     )}
+                    onClick={handleLikeClick}
                   >
                     <svg className={styles.trackPlay__dislikeSvg}>
                       <use

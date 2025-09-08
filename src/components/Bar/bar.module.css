@@ -408,3 +408,46 @@
   stroke: #696969 !important;
   cursor: not-allowed !important;
 }
+
+.trackPlay__dislikeNotAuth {
+  position: relative;
+  cursor: not-allowed !important;
+}
+
+.trackPlay__dislikeNotAuth .trackPlay__dislikeSvg {
+  stroke: #696969 !important;
+}
+
+.trackPlay__dislikeNotAuth::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #696969;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.trackPlay__dislikeLiked .trackPlay__dislikeSvg {
+  stroke: #b672ff !important;
+  fill: #b672ff !important;
+}
+
+.trackPlay__dislike:hover .trackPlay__dislikeSvg {
+  stroke: #acacac !important;
+}
+
+.trackPlay__dislikeLiked:hover .trackPlay__dislikeSvg {
+  stroke: #9a48f1 !important;
+  fill: #9a48f1 !important;
+}
+
+.trackPlay__dislikeNotAuth:hover .trackPlay__dislikeSvg {
+  stroke: #696969 !important;
+}
+
+.trackPlay__dislikeNotAuth:hover::after {
+  background-color: #696969;
+}
