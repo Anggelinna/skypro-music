@@ -23,9 +23,7 @@ const Track = ({ track, playList }: TrackProps) => {
   );
 
   const { accessToken } = useAppSelector((state) => state.auth);
-
   const { toggleLike, isLike } = useLikeTrack(track);
-
   const currentTrack = useAppSelector(
     (state) => state.tracks.currentTrack.track
   );
@@ -37,14 +35,27 @@ const Track = ({ track, playList }: TrackProps) => {
     dispatch(setCurrentPlaylist(playList));
   };
 
-  // Используем обычную иконку dislike для неавторизованных, но с зачеркиванием через CSS
-  const likeIcon = () => {
-    if (!accessToken) {
-      return "dislike"; // используем обычную иконку dislike
-    } else {
-      return isLike ? "like" : "dislike";
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (accessToken) {
+      toggleLike();
     }
   };
+
+
+  const getLikeIcon = () => {
+    if (!accessToken) {
+      return "dislike"; // Для неавторизованных - обычный dislike
+    }
+    return isLike ? "like" : "dislike";
+  };
+
+
+  const svgClasses = classNames(styles.track__timeSvg, {
+    [styles.track__timeSvgAuth]: accessToken, // Стили для авторизованных
+    [styles.track__timeSvgNotAuth]: !accessToken, // Стили для неавторизованных
+    [styles.track__timeSvgLiked]: accessToken && isLike, // Стили для лайкнутых
+  });
 
   return (
     <div className={styles.playlist__item} onClick={handlerClickCurrentTrack}>
@@ -61,7 +72,7 @@ const Track = ({ track, playList }: TrackProps) => {
               </>
             ) : (
               <svg className={styles.track__titleSvg}>
-                <use xlinkHref={`/img/icon/sprite.svg#icon-note`}></use>
+                <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
               </svg>
             )}
           </div>
@@ -83,18 +94,10 @@ const Track = ({ track, playList }: TrackProps) => {
         </div>
         <div className={styles.track__time}>
           <svg
-            className={classNames(styles.track__timeSvg, {
-              [styles.track__timeSvgLiked]: isLike && accessToken,
-              [styles.track__timeSvgNotAuth]: !accessToken, // этот класс добавит зачеркивание
-            })}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (accessToken) {
-                toggleLike();
-              }
-            }}
+            className={svgClasses}
+            onClick={handleLikeClick}
           >
-            <use xlinkHref={`/img/icon/sprite.svg#icon-${likeIcon()}`}></use>
+            <use xlinkHref={`/img/icon/sprite.svg#icon-${getLikeIcon()}`}></use>
           </svg>
           <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}

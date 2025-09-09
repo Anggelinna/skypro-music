@@ -1,6 +1,13 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { TrackType } from "@/sharedTypes/sharedTypes";
 
+type TrackFilters = {
+  query: string; // текстовый поиск
+  artists: string[]; // мультиселект исполнителей
+  years: number[]; // мультиселект лет (или сделаем диапазон — см. примечание)
+  genres: string[]; // мультиселект жанров
+};
+
 type TrackState = {
   tracks: TrackType[];
   currentTrack: {
@@ -14,6 +21,7 @@ type TrackState = {
   isShuffle: boolean;
   fetchError: null | string;
   fetchLoading: boolean;
+  filters: TrackFilters;
 };
 
 const initialState: TrackState = {
@@ -29,9 +37,10 @@ const initialState: TrackState = {
   isShuffle: false,
   fetchError: null,
   fetchLoading: false,
+  filters: { query: "", artists: [], years: [], genres: [] },
 };
 
-const trackSlice = createSlice({
+export const trackSlice = createSlice({
   name: "tracks",
   initialState,
   reducers: {
@@ -55,7 +64,7 @@ const trackSlice = createSlice({
       state.favoriteTracks = action.payload;
     },
     addLikedTracks(state, action: PayloadAction<TrackType>) {
-      state.favoriteTracks = [...state.favoriteTracks, action.payload]; 
+      state.favoriteTracks = [...state.favoriteTracks, action.payload];
     },
     removeLikedTracks(state, action: PayloadAction<TrackType>) {
       state.favoriteTracks = state.favoriteTracks.filter(
@@ -104,6 +113,27 @@ const trackSlice = createSlice({
     toggleShuffle: (state) => {
       state.isShuffle = !state.isShuffle;
     },
+    setFetchError: (
+      state: TrackState,
+      action: PayloadAction<string | null>
+    ) => {
+      state.fetchError = action.payload;
+    },
+    setFilterQuery(state, action: PayloadAction<string>) {
+      state.filters.query = action.payload;
+    },
+    setArtistFilters(state, action: PayloadAction<string[]>) {
+      state.filters.artists = action.payload;
+    },
+    setYearFilters(state, action: PayloadAction<number[]>) {
+      state.filters.years = action.payload;
+    },
+    setGenreFilters(state, action: PayloadAction<string[]>) {
+      state.filters.genres = action.payload;
+    },
+    resetFilters(state) {
+      state.filters = { query: "", artists: [], years: [], genres: [] };
+    },
   },
 });
 
@@ -120,5 +150,11 @@ export const {
   setFavoriteTracks,
   addLikedTracks,
   removeLikedTracks,
+  setFetchError,
+  setFilterQuery,
+  setArtistFilters,
+  setYearFilters,
+  setGenreFilters,
+  resetFilters,
 } = trackSlice.actions;
 export const trackSliceReducer = trackSlice.reducer;

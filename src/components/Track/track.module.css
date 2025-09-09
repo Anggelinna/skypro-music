@@ -15,22 +15,23 @@
     opacity: 1;
   }
 }
+
 .track__playingDot {
   width: 16px;
   height: 16px;
-  background-color: #bb86fc; /* Фиолетовый цвет */
+  background-color: #bb86fc;
   border-radius: 50%;
   animation: glowPulse 2s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .track__currentDot {
   width: 16px;
   height: 16px;
-  background-color: #bb86fc; /* Фиолетовый цвет */
+  background-color: #bb86fc;
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
+
 .playlist__item {
   width: 100%;
   display: block;
@@ -38,31 +39,15 @@
 }
 
 .playlist__track {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
 
 .track__title {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   width: 447px;
 }
@@ -72,14 +57,8 @@
   height: 51px;
   padding: 16px;
   background: #313131;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   margin-right: 17px;
 }
@@ -99,21 +78,9 @@
   color: #ffffff;
 }
 
-.track__titleSpan {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #4e4e4e;
-}
-
 .track__author {
   width: 321px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
   justify-content: flex-start;
 }
 
@@ -151,6 +118,7 @@
   fill: transparent;
   stroke: #696969;
   cursor: pointer;
+  position: relative;
 }
 
 .track__timeText {
@@ -162,57 +130,42 @@
   color: #696969;
 }
 
-.track__titleImg {
-  animation: glowPulse 2s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 50%;
+/* Стили для авторизованных пользователей */
+.track__timeSvgAuth {
+  cursor: pointer;
 }
 
-.track__timeSvg:hover {
-  stroke: #acacac !important;
-}
-
-.track__timeSvgLiked:hover {
-  stroke: #9a48f1 !important;
-  fill: #9a48f1 !important;
-}
-
-.track__timeSvgNotAuth {
-  position: relative;
-  stroke: #696969 !important;
-  cursor: not-allowed !important;
-}
-
-.track__timeSvgNotAuth::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #696969;
-  transform: rotate(-45deg);
-  transform-origin: center;
+.track__timeSvgAuth:hover {
+  stroke: #acacac;
 }
 
 .track__timeSvgLiked {
-  stroke: #b672ff !important;
-  fill: #b672ff !important;
-}
-
-.track__timeSvg:hover {
-  stroke: #acacac !important;
+  stroke: #b672ff;
+  fill: #b672ff;
 }
 
 .track__timeSvgLiked:hover {
-  stroke: #9a48f1 !important;
-  fill: #9a48f1 !important;
+  stroke: #9a48f1;
+  fill: #9a48f1;
+}
+
+/* Стили для неавторизованных пользователей */
+.track__timeSvgNotAuth {
+  cursor: not-allowed;
+}
+
+.track__timeSvgNotAuth::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -2px;
+  right: -2px;
+  height: 1px;
+  background-color: #696969;
+  transform: rotate(-45deg);
+  z-index: 1;
 }
 
 .track__timeSvgNotAuth:hover {
-  stroke: #696969 !important;
-}
-
-.track__timeSvgNotAuth:hover::after {
-  background-color: #696969;
+  stroke: #696969;
 }

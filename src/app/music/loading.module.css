@@ -1,8 +1,445 @@
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #ece9f1;
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+/* Apply shimmer and beautify skeletons */
+.centerblock__h2,
+.filter__title,
+.filter__button,
+.playlistTitle__col,
+.track__titleImage,
+.track__titleLink,
+.track__authorLink,
+.track__albumLink,
+.track__timeText,
+.search__text {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px 0 rgba(80, 80, 120, 0.06);
+  background: #ece9f1;
+  min-height: 14px;
+  min-width: 40px;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.centerblock__h2,
+.filter__title,
+.filter__button,
+.playlistTitle__col,
+.track__titleImage,
+.track__titleLink,
+.track__authorLink,
+.track__albumLink,
+.track__timeText,
+.search__text {
+  /* shimmer effect */
+  background: #ece9f1;
+  overflow: hidden;
+}
+
+.centerblock__h2.skeleton-shimmer,
+.filter__title.skeleton-shimmer,
+.filter__button.skeleton-shimmer,
+.playlistTitle__col.skeleton-shimmer,
+.track__titleImage.skeleton-shimmer,
+.track__titleLink.skeleton-shimmer,
+.track__authorLink.skeleton-shimmer,
+.track__albumLink.skeleton-shimmer,
+.track__timeText.skeleton-shimmer,
+.search__text.skeleton-shimmer {
+  background: #ece9f1;
+}
+
+.skeletonTrack {
+  border-radius: 12px;
+  background: rgba(236, 233, 241, 0.12);
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(80, 80, 120, 0.04);
+  padding: 8px 0 8px 0;
+}
+
+.track__titleImage {
+  border-radius: 8px;
+  background: #ece9f1;
+  min-width: 51px;
+  min-height: 51px;
+  margin-right: 17px;
+  box-shadow: 0 2px 8px 0 rgba(80, 80, 120, 0.08);
+}
+
+.filter__button {
+  margin-right: 10px;
+  min-width: 90px;
+  min-height: 32px;
+  border: none;
+  background: #ece9f1;
+  color: transparent;
+}
+
+.filter__button:last-child {
+  margin-right: 0;
+}
+
+.centerblock__filter {
+  gap: 18px;
+}
 .loading {
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex-grow: 3;
+  padding: 20px 40px 20px 111px;
+  background: transparent;
+}
+
+.centerblock {
+  width: auto;
+  flex-grow: 3;
+  padding: 20px 40px 20px 111px;
+}
+.centerblock__search {
+  width: 100%;
+  border-bottom: 1px solid #4e4e4e;
+  margin-bottom: 51px;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  height: 100vh;
+}
+.search__svg {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  stroke: #ffffff;
+  fill: transparent;
+}
+.search__text {
+  flex-grow: 100;
+  background-color: transparent;
+  border: none;
+  padding: 13px 10px 14px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  outline: none;
+}
+.centerblock__h2 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 72px;
+  letter-spacing: -0.8px;
+  margin-bottom: 45px;
+  color: white;
+}
+.centerblock__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 51px;
+  gap: 10px;
+}
+.filter__title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-right: 15px;
+  color: white;
+}
+.filter__button {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #ffffff;
+  border-radius: 60px;
+  padding: 6px 20px;
+  color: white;
+  margin: 0;
+  user-select: none;
+}
+.centerblock__content {
+  display: flex;
+  flex-direction: column;
+}
+.content__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.playlistTitle__col {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #696969;
+  text-transform: uppercase;
+}
+.col01 {
+  width: 447px;
+}
+.col02 {
+  width: 321px;
+}
+.col03 {
+  width: 245px;
+}
+.col04 {
+  width: 60px;
+  text-align: end;
+}
+.content__playlist {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 65vh;
+}
+.skeletonTrack {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.track__title {
+  display: flex;
+  align-items: center;
+  width: 447px;
+}
+.track__titleImage {
+  width: 51px;
+  height: 51px;
+  padding: 16px;
+  background: #313131;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 17px;
+}
+.track__titleLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+.track__author {
+  width: 321px;
+  display: flex;
+  justify-content: flex-start;
+}
+.track__authorLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  text-align: left;
+}
+.track__album {
+  width: 245px;
+}
+.track__albumLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #696969;
+}
+.track__time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.track__timeText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #696969;
+}
+
+.centerblock {
+  width: 340px;
+  flex-grow: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.centerblock__search {
+  width: 340px;
+  border-bottom: 1px solid #4e4e4e;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.skeletonSearchIcon {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+.skeletonSearchInput {
+  flex-grow: 1;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+.skeletonTitle {
+  width: 340px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  margin-bottom: 24px;
+}
+
+.skeletonFilters {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.skeletonFilter {
+  width: 90px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+.skeletonPlaylistHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.skeletonCol01 {
+  width: 447px;
+  height: 18px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+.skeletonCol02 {
+  width: 321px;
+  height: 18px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+.skeletonCol03 {
+  width: 245px;
+  height: 18px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+.skeletonCol04 {
+  width: 60px;
+  height: 18px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.skeletonTrack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  min-height: 51px;
+}
+.skeletonAvatar {
+  width: 51px;
+  height: 51px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  margin-right: 17px;
+}
+.skeletonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 160px;
+}
+.skeletonLine {
+  width: 120px;
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+.skeletonLineShort {
+  width: 80px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+.skeletonAuthor {
+  width: 321px;
+  height: 14px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+.skeletonAlbum {
+  width: 245px;
+  height: 14px;
+  border-radius: 6px;
+  background: #ece9f1;
+}
+.skeletonTime {
+  width: 60px;
+  height: 14px;
+  border-radius: 6px;
+  background: #ece9f1;
 }
 
 .loading__spinner {
@@ -15,6 +452,78 @@
   stroke: #9370db;
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
+}
+
+/* Skeleton Loader Styles */
+.skeletonWrapper {
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.skeletonTitle {
+  width: 220px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.skeletonTrack {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.skeletonAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+.skeletonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonLine {
+  width: 160px;
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+.skeletonLineShort {
+  width: 90px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9f1 25%, #f3f1f7 50%, #ece9f1 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Вращение круга */

@@ -7,11 +7,16 @@ import Sidebar from "@components/Sidebar/Sidebar";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { tracksGetAll, tracksGetFavorites } from "@/services/tracks/tracksApi";
-import { setTracks, setFavoriteTracks } from "@/store/features/trackSlice";
+import {
+  setTracks,
+  setFavoriteTracks,
+  setFetchError,
+} from "@/store/features/trackSlice";
 import Loading from "./loading";
 import UseInitAuth from "@/hooks/useInitAuth";
 import { useAppSelector } from "@/store/store";
 import { withReauth } from "@/utils/withReauth";
+import { ToastContainer, toast } from "react-toastify";
 
 type MusicLayoutProps = {
   children: React.ReactNode;
@@ -19,6 +24,7 @@ type MusicLayoutProps = {
 
 const MusicLayout = ({ children }: MusicLayoutProps) => {
   const { accessToken, refreshToken } = useAppSelector((state) => state.auth);
+  const fetchError = useAppSelector((state) => state.tracks.fetchError);
   UseInitAuth();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +38,11 @@ const MusicLayout = ({ children }: MusicLayoutProps) => {
         const response = await tracksGetAll();
         dispatch(setTracks(response));
       } catch (error) {
-        console.error("Ошибка при получении треков: ", error);
+        const message = error instanceof Error ? error.message : String(error);
+        if (fetchError !== message) {
+          dispatch(setFetchError(message));
+          toast.error(`Ошибка при получении треков: ${message}`);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -55,15 +65,42 @@ const MusicLayout = ({ children }: MusicLayoutProps) => {
         };
         fetchFavoriteTracks();
       } catch (error) {
-        console.error("Ошибка при получении избранных треков: ", error);
+        const message = error instanceof Error ? error.message : String(error);
+        if (fetchError !== message) {
+          dispatch(setFetchError(message));
+          toast.error(`Ошибка при получении избранных треков: ${message}`, {
+            toastId: "music-layout-toast",
+          });
+        }
       } finally {
         setIsLoadingFavorites(false);
       }
     }
   }, [accessToken]);
 
+  useEffect(() => {
+    if (fetchError) {
+      toast.error(`Ошибка: ${fetchError}`, {
+        toastId: "music-layout-toast",
+      });
+      dispatch(setFetchError(null));
+    }
+  }, [fetchError]);
+
   return (
     <div className={styles.wrapper}>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className={styles.container}>
         <main className={styles.main}>
           <MainNav />

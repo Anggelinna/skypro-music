@@ -26,7 +26,6 @@ export const withReauth = async <T>(
         throw refreshError;
       }
     }
-
     // Если ошибка не 401, пробрасываем её
     throw error;
   }

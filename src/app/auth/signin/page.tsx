@@ -39,16 +39,11 @@ export default function Signin() {
     urerSignIn({ email: watch("login"), password: watch("password") })
       .then((res) => {
         if (res.status.toString().startsWith("2")) {
-          // localStorage.setItem("email", res.data.email);
-          // localStorage.setItem("username", res.data.username);
-          // localStorage.setItem("_id", res.data._id.toString());
-          dispatch(setUserName(res.data.username)); 
+          dispatch(setUserName(res.data.username));
           userGetToken({
             email: watch("login"),
             password: watch("password"),
           }).then((token) => {
-            console.log("Токен получен:", token);
-            // localStorage.setItem("token", token.access);
             dispatch(setAccessToken(token.access));
             dispatch(setRefreshToken(token.refresh));
           });
@@ -68,10 +63,8 @@ export default function Signin() {
             setErrorMessage(error.response?.data?.message);
           }
           if (error.request) {
-            console.error("Ошибка запроса:", error.request);
-            setErrorMessage(
-              "Отсутствует ответ от сервера. Пожалуйста, проверьте подключение к интернету."
-            );
+            console.error("Ошибка запроса:", error.message);
+            setErrorMessage(error.response?.data.message);
           } else {
             console.error("Ошибка настройки:", error.message);
             setErrorMessage("Произошла неизвестная ошибка, попробуйте позже.");
