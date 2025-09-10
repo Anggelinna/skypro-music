@@ -8,7 +8,6 @@ import {
 } from "@/store/features/trackSlice";
 import { TrackType } from "@/sharedTypes/sharedTypes";
 import { formatTime } from "@utils/helper";
-import classNames from "classnames";
 import { useLikeTrack } from "@/hooks/useLikeTracks";
 
 type TrackProps = {
@@ -23,7 +22,12 @@ const Track = ({ track, playList }: TrackProps) => {
   );
 
   const { accessToken } = useAppSelector((state) => state.auth);
-  const { toggleLike, isLike } = useLikeTrack(track);
+  const favoriteTracks = useAppSelector((state) => state.tracks.favoriteTracks);
+
+  const { toggleLike } = useLikeTrack(track);
+
+  const isLike = favoriteTracks.some((favTrack) => favTrack._id === track._id);
+
   const currentTrack = useAppSelector(
     (state) => state.tracks.currentTrack.track
   );
@@ -35,27 +39,23 @@ const Track = ({ track, playList }: TrackProps) => {
     dispatch(setCurrentPlaylist(playList));
   };
 
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (accessToken) {
-      toggleLike();
-    }
-  };
-
-
-  const getLikeIcon = () => {
+  const likeIcon = () => {
     if (!accessToken) {
-      return "dislike"; // Для неавторизованных - обычный dislike
+      return "dislike-notauth";
+    } else {
+      return isLike ? "like" : "dislike";
     }
-    return isLike ? "like" : "dislike";
   };
 
-
-  const svgClasses = classNames(styles.track__timeSvg, {
-    [styles.track__timeSvgAuth]: accessToken, // Стили для авторизованных
-    [styles.track__timeSvgNotAuth]: !accessToken, // Стили для неавторизованных
-    [styles.track__timeSvgLiked]: accessToken && isLike, // Стили для лайкнутых
-  });
+  const getSvgClass = () => {
+    if (!accessToken) {
+      return `${styles.track__timeSvg} ${styles.track__timeSvgDisabled} ${styles.track__timeSvgNotAuth}`;
+    }
+    if (isLike) {
+      return `${styles.track__timeSvg} ${styles.track__timeSvgLiked}`;
+    }
+    return `${styles.track__timeSvg} ${styles.track__timeSvgNormal}`;
+  };
 
   return (
     <div className={styles.playlist__item} onClick={handlerClickCurrentTrack}>
@@ -72,7 +72,7 @@ const Track = ({ track, playList }: TrackProps) => {
               </>
             ) : (
               <svg className={styles.track__titleSvg}>
-                <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                <use xlinkHref={`/img/icon/sprite.svg#icon-note`}></use>
               </svg>
             )}
           </div>
@@ -94,10 +94,15 @@ const Track = ({ track, playList }: TrackProps) => {
         </div>
         <div className={styles.track__time}>
           <svg
-            className={svgClasses}
-            onClick={handleLikeClick}
+            className={getSvgClass()}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (accessToken) {
+                toggleLike();
+              }
+            }}
           >
-            <use xlinkHref={`/img/icon/sprite.svg#icon-${getLikeIcon()}`}></use>
+            <use xlinkHref={`/img/icon/sprite.svg#icon-${likeIcon()}`}></use>
           </svg>
           <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}

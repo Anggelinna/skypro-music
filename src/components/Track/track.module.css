@@ -1,17 +1,17 @@
 @keyframes glowPulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
     opacity: 1;
   }
   50% {
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(187, 134, 252, 0.8);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     opacity: 0.9;
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
     opacity: 1;
   }
 }
@@ -39,15 +39,31 @@
 }
 
 .playlist__track {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
 .track__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   width: 447px;
 }
@@ -57,8 +73,14 @@
   height: 51px;
   padding: 16px;
   background: #313131;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   margin-right: 17px;
 }
@@ -78,9 +100,21 @@
   color: #ffffff;
 }
 
+.track__titleSpan {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4e4e4e;
+}
+
 .track__author {
   width: 321px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
 }
 
@@ -111,14 +145,22 @@
   align-items: center;
 }
 
+/* Базовые стили для всех SVG иконок */
 .track__timeSvg {
   width: 14px;
   height: 12px;
   margin-right: 17px;
-  fill: transparent;
-  stroke: #696969;
   cursor: pointer;
-  position: relative;
+}
+
+/* Стиль для неактивной иконки (неавторизованные пользователи) */
+.track__timeSvgDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.track__timeSvg:hover {
+  opacity: 0.8;
 }
 
 .track__timeText {
@@ -130,42 +172,29 @@
   color: #696969;
 }
 
-/* Стили для авторизованных пользователей */
-.track__timeSvgAuth {
-  cursor: pointer;
+.track__titleImg {
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 50%;
 }
 
-.track__timeSvgAuth:hover {
-  stroke: #acacac;
-}
+/* СТИЛИ ДЛЯ РАЗНЫХ СОСТОЯНИЙ ИКОНОК */
 
+/* Иконка лайка (активная) - полностью фиолетовая */
 .track__timeSvgLiked {
-  stroke: #b672ff;
-  fill: #b672ff;
+  fill: #BB86FC !important;
+  stroke: #BB86FC !important;
 }
 
-.track__timeSvgLiked:hover {
-  stroke: #9a48f1;
-  fill: #9a48f1;
-}
-
-/* Стили для неавторизованных пользователей */
-.track__timeSvgNotAuth {
-  cursor: not-allowed;
-}
-
-.track__timeSvgNotAuth::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -2px;
-  right: -2px;
-  height: 1px;
-  background-color: #696969;
-  transform: rotate(-45deg);
-  z-index: 1;
-}
-
-.track__timeSvgNotAuth:hover {
+/* Иконка дизлайка (неактивная) - стандартная серая */
+.track__timeSvgNormal {
+  fill: transparent;
   stroke: #696969;
+}
+
+/* Иконка для неавторизованных пользователей */
+.track__timeSvgNotAuth {
+  fill: transparent;
+  stroke: #696969;
+  opacity: 0.5;
 }

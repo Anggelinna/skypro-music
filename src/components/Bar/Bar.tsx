@@ -148,7 +148,7 @@ const Bar = () => {
 
   const likeIcon = () => {
     if (!accessToken) {
-      return "dislike"; // используем обычную иконку dislike
+      return "dislike-notauth"; // используем обычную иконку dislike
     } else {
       return isLike ? "like" : "dislike";
     }
