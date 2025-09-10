@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useEffect, useState } from "react";
 import styles from "./bar.module.css";
 import classNames from "classnames";
@@ -33,7 +32,6 @@ const Bar = () => {
   );
 
   const { accessToken } = useAppSelector((state) => state.auth);
-
   const { toggleLike, isLike } = useLikeTrack(currentTrack);
 
   useEffect(() => {
@@ -148,7 +146,7 @@ const Bar = () => {
 
   const likeIcon = () => {
     if (!accessToken) {
-      return "dislike-notauth"; // используем обычную иконку dislike
+      return "dislike-notauth";
     } else {
       return isLike ? "like" : "dislike";
     }
@@ -237,7 +235,6 @@ const Bar = () => {
                   </svg>
                 </div>
               </div>
-
               <div className={styles.player__trackPlay}>
                 <div className={styles.trackPlay__contain}>
                   <div className={styles.trackPlay__image}>

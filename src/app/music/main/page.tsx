@@ -1,5 +1,4 @@
 "use client";
-
 import React, { use, useEffect } from "react";
 import CenterBlock from "@components/CenterBlock/CenterBlock";
 import { useAppDispatch } from "@/store/store";

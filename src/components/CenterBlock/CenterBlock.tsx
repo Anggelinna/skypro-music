@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import classNames from "classnames";
 import styles from "./centerblock.module.css";

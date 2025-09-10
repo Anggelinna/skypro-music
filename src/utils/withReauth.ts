@@ -13,7 +13,6 @@ export const withReauth = async <T>(
     return await apiFunction("");
   } catch (error) {
     const axiosError = error as AxiosError;
-
     // Если ошибка 401, обновляем токен и повторяем запрос
     if (axiosError.response?.status === 401) {
       try {

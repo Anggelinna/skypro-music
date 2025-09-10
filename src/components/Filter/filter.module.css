@@ -1,74 +1,186 @@
+.filter__button_group {
+  position: relative;
+  cursor: pointer;
+}
+
 .filter__button {
-  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  border: 1px solid #ffffff;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
   border-radius: 60px;
   padding: 6px 20px;
-  color: white;
-  margin: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
-.filter__button_active {
+
+.filter__button:hover {
   border-color: #b672ff;
   color: #b672ff;
 }
 
+.badge {
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 10px;
+  border: 1px solid currentColor;
+}
+
+.caret {
+  width: 10px;
+  height: 6px;
+}
+
+.filter__title {
+  cursor: default;
+}
+
 .filter__dropdown {
   position: absolute;
-  margin-top: 10px;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
   width: max-content;
   max-height: 305px;
-  -webkit-box-sizing: border-box;
-  padding: 34px;
+  box-sizing: border-box;
+  padding: 16px 20px;
   border-radius: 12px;
   background: #313131;
-  overflow-y: scroll;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+
+.filter__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.filter__clear {
+  padding: 2px;
+  background: transparent;
+  border: 0;
+  color: #b672ff;
+  cursor: pointer;
 }
 
 .filter__list {
-  color: white;
+  color: #fff;
   display: flex;
-  gap: 28px;
-  height: max-content;
+  flex-direction: column;
+  gap: 12px;
   max-height: 237px;
   overflow-y: auto;
-  flex-direction: column;
   width: max-content;
   max-width: 248px;
+}
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: rgba(75, 73, 73, 1);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: white;
-  }
+.filter__list::-webkit-scrollbar {
+  width: 4px;
+}
+.filter__list::-webkit-scrollbar-track {
+  background-color: rgba(75, 73, 73, 1);
+}
+.filter__list::-webkit-scrollbar-thumb {
+  background-color: #fff;
 }
 
 .filter__list_element {
+  display: flex;
+  gap: 8px;
+  align-items: center;
   color: #fff;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
+  font-size: 16px;
   line-height: 24px;
-  padding-right: 20px;
+  cursor: pointer;
 }
 
 .filter__list_element:hover {
   color: #b672ff;
-  text-decoration-line: underline;
+  text-decoration: underline;
 }
 
-.filter__button_group {
-  position: relative;
+/* КРУГЛЫЕ чекбоксы */
+.option__checkbox {
+  /* убираем системный вид */
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 18px;
+  height: 18px;
+  border: 2px solid #b672ff;
+  border-radius: 50%; /* круглая форма */
+  background: transparent;
+  display: inline-grid;
+  place-content: center;
   cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* «точка» внутри круга при checked */
+.option__checkbox::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  background: #b672ff;
+  transition: transform 0.12s ease-in-out;
+}
+
+.option__checkbox:hover {
+  box-shadow: 0 0 0 3px rgba(182, 114, 255, 0.15);
+}
+
+.option__checkbox:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(182, 114, 255, 0.3);
+}
+
+.option__checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* Неактивные */
+.option__checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ПОДСВЕТКА выбранного пункта целиком */
+.filter__list_element {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filter__list_element:hover {
+  color: #b672ff;
+  text-decoration: none;
+}
+
+/* если чекбокс checked — красим подпись в акцентный */
+.option__checkbox:checked + .option__label {
+  color: #b672ff;
+}
+
+/* можно добавить фон на весь элемент при checked */
+.option__checkbox:checked ~ .option__label {
+  background: rgba(182, 114, 255, 0.12);
+  border-radius: 6px;
+  padding: 0 4px;
 }

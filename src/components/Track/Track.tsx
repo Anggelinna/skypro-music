@@ -25,7 +25,6 @@ const Track = ({ track, playList }: TrackProps) => {
   const favoriteTracks = useAppSelector((state) => state.tracks.favoriteTracks);
 
   const { toggleLike } = useLikeTrack(track);
-
   const isLike = favoriteTracks.some((favTrack) => favTrack._id === track._id);
 
   const currentTrack = useAppSelector(
