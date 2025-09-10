@@ -6,7 +6,10 @@ import { tracksGetSelection } from "@/services/tracks/tracksApi";
 import { useState } from "react";
 import { TrackType } from "@/sharedTypes/sharedTypes";
 import { useAppDispatch } from "@/store/store";
-import { setCurrentTrackList } from "@/store/features/trackSlice";
+import {
+  setCurrentTrackList,
+  setCurrentPlaylist,
+} from "@/store/features/trackSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Loading from "../../loading";
@@ -16,12 +19,17 @@ const CategoryPage = () => {
   const { id } = useParams<{ id: string }>();
   const [playListName, setPlayListName] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+
   const tracks = useSelector(
     (state: RootState): TrackType[] => state.tracks.tracks
   );
 
-  const formTrackList = (tracks: TrackType[], playListItems: number[]) => {
-    return tracks.filter((track) => playListItems.includes(track._id));
+  const formTrackList = (
+    tracks: TrackType[],
+    playListItems: Array<string | number>
+  ) => {
+    const ids = new Set(playListItems.map((x) => String(x)));
+    return tracks.filter((t) => ids.has(String(t._id)));
   };
 
   useEffect(() => {
@@ -30,6 +38,7 @@ const CategoryPage = () => {
         const response = await tracksGetSelection({ id: Number(id) + 1 });
         setPlayListName(response.name);
         dispatch(setCurrentTrackList(formTrackList(tracks, response.items)));
+        dispatch(setCurrentPlaylist(formTrackList(tracks, response.items)));
       } catch (error) {
         console.error("Ошибка при получении плейлиста:", error);
       } finally {
@@ -38,6 +47,14 @@ const CategoryPage = () => {
     };
     getSelection();
   }, [id]);
+
+  useEffect(() => {
+    dispatch(setCurrentTrackList(tracks));
+  }, [tracks, dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(setCurrentPlaylist(getFilteredTracks(tracks, "all", filter)));
+  // }, [filter]);
 
   if (isLoading) {
     return <Loading />;

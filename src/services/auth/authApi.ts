@@ -1,13 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants";
 
-// type AuthUserType = {
-//   email: string;
-//   password: string;
-//   _id: number;
-//   status: string;
-// };
-
 export const urerSignIn = ({
   email,
   password,
@@ -15,15 +8,7 @@ export const urerSignIn = ({
   email: string;
   password: string;
 }) => {
-  return axios.post(
-    `${BASE_URL}/user/login/`,
-    { email, password },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return axios.post(`${BASE_URL}/user/login/`, { email, password });
 };
 
 export const userSignUp = ({
@@ -35,16 +20,18 @@ export const userSignUp = ({
   password: string;
   username: string;
 }) => {
-  return axios.post(
-    `${BASE_URL}/user/signup/`,
-    { email, password, username },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return axios.post(`${BASE_URL}/user/signup/`, { email, password, username });
 };
+
+type AccessTokenType = {
+  access: string;
+};
+
+type RefreshTokenType = {
+  refresh: string;
+};
+
+type UserTokenType = AccessTokenType & RefreshTokenType;
 
 export const userGetToken = ({
   email,
@@ -52,18 +39,18 @@ export const userGetToken = ({
 }: {
   email: string;
   password: string;
-}) => {
+}): Promise<UserTokenType> => {
   return axios
-    .post(
-      `${BASE_URL}/user/token`,
-      { email, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .post(`${BASE_URL}/user/token`, { email, password })
     .then((response) => {
       return response.data;
     });
 };
+
+export const userRefreshToken = (refresh: string): Promise<AccessTokenType> => {
+  return axios
+    .post(`${BASE_URL}/user/token/refresh`, { refresh })
+    .then((response) => {
+      return response.data;
+    });
+}; 

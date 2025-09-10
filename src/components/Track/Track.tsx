@@ -8,7 +8,7 @@ import {
 } from "@/store/features/trackSlice";
 import { TrackType } from "@/sharedTypes/sharedTypes";
 import { formatTime } from "@utils/helper";
-import classNames from "classnames";
+import { useLikeTrack } from "@/hooks/useLikeTracks";
 
 type TrackProps = {
   track: TrackType;
@@ -21,6 +21,13 @@ const Track = ({ track, playList }: TrackProps) => {
     (state) => state.tracks.currentTrack.isPlaying
   );
 
+  const { accessToken } = useAppSelector((state) => state.auth);
+  const favoriteTracks = useAppSelector((state) => state.tracks.favoriteTracks);
+
+  const { toggleLike } = useLikeTrack(track);
+
+  const isLike = favoriteTracks.some((favTrack) => favTrack._id === track._id);
+
   const currentTrack = useAppSelector(
     (state) => state.tracks.currentTrack.track
   );
@@ -32,6 +39,24 @@ const Track = ({ track, playList }: TrackProps) => {
     dispatch(setCurrentPlaylist(playList));
   };
 
+  const likeIcon = () => {
+    if (!accessToken) {
+      return "dislike-notauth";
+    } else {
+      return isLike ? "like" : "dislike";
+    }
+  };
+
+  const getSvgClass = () => {
+    if (!accessToken) {
+      return `${styles.track__timeSvg} ${styles.track__timeSvgDisabled} ${styles.track__timeSvgNotAuth}`;
+    }
+    if (isLike) {
+      return `${styles.track__timeSvg} ${styles.track__timeSvgLiked}`;
+    }
+    return `${styles.track__timeSvg} ${styles.track__timeSvgNormal}`;
+  };
+
   return (
     <div className={styles.playlist__item} onClick={handlerClickCurrentTrack}>
       <div className={styles.playlist__track}>
@@ -40,10 +65,8 @@ const Track = ({ track, playList }: TrackProps) => {
             {isCurrentTrack ? (
               <>
                 {isPlaying ? (
-                  // Анимированная фиолетовая точка для играющего трека
                   <div className={styles.track__playingDot}></div>
                 ) : (
-                  // Статичная фиолетовая точка для текущего, но не играющего трека
                   <div className={styles.track__currentDot}></div>
                 )}
               </>
@@ -70,8 +93,16 @@ const Track = ({ track, playList }: TrackProps) => {
           </Link>
         </div>
         <div className={styles.track__time}>
-          <svg className={styles.track__timeSvg}>
-            <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
+          <svg
+            className={getSvgClass()}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (accessToken) {
+                toggleLike();
+              }
+            }}
+          >
+            <use xlinkHref={`/img/icon/sprite.svg#icon-${likeIcon()}`}></use>
           </svg>
           <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}
@@ -81,4 +112,5 @@ const Track = ({ track, playList }: TrackProps) => {
     </div>
   );
 };
+
 export default Track;

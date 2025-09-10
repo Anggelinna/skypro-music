@@ -1,46 +1,33 @@
 @keyframes glowPulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
     opacity: 1;
   }
   50% {
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(187, 134, 252, 0.8);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     opacity: 0.9;
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0px rgba(187, 134, 252, 0.5);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
     opacity: 1;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.7;
   }
 }
 
 .track__playingDot {
   width: 16px;
   height: 16px;
-  background-color: #bb86fc; /* Фиолетовый цвет */
+  background-color: #bb86fc;
   border-radius: 50%;
   animation: glowPulse 2s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .track__currentDot {
   width: 16px;
   height: 16px;
-  background-color: #bb86fc; /* Фиолетовый цвет */
+  background-color: #bb86fc;
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -99,8 +86,8 @@
 }
 
 .track__titleSvg {
-  width: 20px;
-  height: 19px;
+  width: 18px;
+  height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
 }
@@ -158,12 +145,22 @@
   align-items: center;
 }
 
+/* Базовые стили для всех SVG иконок */
 .track__timeSvg {
-  width: 16px;
-  height: 14px;
+  width: 14px;
+  height: 12px;
   margin-right: 17px;
-  fill: transparent;
-  stroke: #696969;
+  cursor: pointer;
+}
+
+/* Стиль для неактивной иконки (неавторизованные пользователи) */
+.track__timeSvgDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.track__timeSvg:hover {
+  opacity: 0.8;
 }
 
 .track__timeText {
@@ -173,4 +170,31 @@
   line-height: 24px;
   text-align: right;
   color: #696969;
+}
+
+.track__titleImg {
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 50%;
+}
+
+/* СТИЛИ ДЛЯ РАЗНЫХ СОСТОЯНИЙ ИКОНОК */
+
+/* Иконка лайка (активная) - полностью фиолетовая */
+.track__timeSvgLiked {
+  fill: #BB86FC !important;
+  stroke: #BB86FC !important;
+}
+
+/* Иконка дизлайка (неактивная) - стандартная серая */
+.track__timeSvgNormal {
+  fill: transparent;
+  stroke: #696969;
+}
+
+/* Иконка для неавторизованных пользователей */
+.track__timeSvgNotAuth {
+  fill: transparent;
+  stroke: #696969;
+  opacity: 0.5;
 }

@@ -53,3 +53,45 @@ export const getUniqueValuesByKey = (
   // Преобразуем Set обратно в массив и возвращаем
   return Array.from(uniqueValues);
 };
+
+export const getFilteredTracks = (
+  tracks: TrackType[],
+  filter: string | null,
+  filterValue: string | null
+): TrackType[] => {
+  if (!filter || !filterValue) return tracks;
+
+  return tracks.filter((track) => {
+    if (filter === "author") {
+      return track.author === filterValue;
+    }
+    if (filter === "release_date") {
+      return String(track.release_date) === filterValue;
+    }
+
+    if (filter === "genre") {
+      return track.genre.includes(filterValue);
+    }
+    if (filter === "all") {
+      console.log("track", track);
+      console.log("filterValue", filterValue);
+      console.log(
+        "result",
+        track.author
+          .toLowerCase()
+          .includes(String(filterValue).toLowerCase()) ||
+          track.name
+            .toLowerCase()
+            .includes(String(filterValue).toLowerCase()) ||
+          track.album.toLowerCase().includes(String(filterValue).toLowerCase())
+      );
+      return (
+        track.author
+          .toLowerCase()
+          .includes(String(filterValue).toLowerCase()) ||
+        track.name.toLowerCase().includes(String(filterValue).toLowerCase()) ||
+        track.album.toLowerCase().includes(String(filterValue).toLowerCase())
+      );
+    }
+  });
+};
