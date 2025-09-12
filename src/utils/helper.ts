@@ -1,4 +1,3 @@
-import { data } from "../data";
 import { TrackType } from "../sharedTypes/sharedTypes";
 
 export const dateFormat = (date: string) => {

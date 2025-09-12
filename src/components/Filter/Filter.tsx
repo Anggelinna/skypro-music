@@ -87,7 +87,7 @@ const Filter = ({ label, facet }: FilterProps) => {
           <span className={styles.badge}>{selectedValues.length}</span>
         )}
         <svg className={styles.caret}>
-          <use xlinkHref="/img/icon/sprite_3.svg#icon-caret"></use>
+          <use xlinkHref="/img/icon/sprite.svg#icon-caret"></use>
         </svg>
       </div>
 
