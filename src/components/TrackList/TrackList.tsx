@@ -1,14 +1,9 @@
 "use client";
-
-import { ReactNode, useEffect, useState } from "react";
 import styles from "./tracklist.module.css";
 import Track from "@components/Track/Track";
 import { TrackType } from "@/sharedTypes/sharedTypes";
-import { tracksGetAll, tracksGetSelection } from "@/services/tracks/tracksApi";
-import { useAppDispatch } from "@/store/store";
-import { setTracks as storeSetTracks } from "@/store/features/trackSlice";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { selectVisibleTracks } from "@/store/selectors/tracks";
 
 type TrackListProps = {
   selectionId?: number;
@@ -16,10 +11,8 @@ type TrackListProps = {
 };
 
 const TrackList = ({ selectionId }: TrackListProps) => {
-  const tracks = useSelector(
-    (state: RootState): TrackType[] => state.tracks.currentTrackList
-  );
-  console.log("tracks1", tracks);
+  const tracks = useSelector(selectVisibleTracks);
+
   return (
     <div className={styles.content__playlist}>
       {tracks.map((track: TrackType) => (

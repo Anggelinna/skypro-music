@@ -53,4 +53,4 @@ export const userRefreshToken = (refresh: string): Promise<AccessTokenType> => {
     .then((response) => {
       return response.data;
     });
-}; 
+};

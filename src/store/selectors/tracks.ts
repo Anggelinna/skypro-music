@@ -2,6 +2,32 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "@/store/store";
 import { TrackType } from "@/sharedTypes/sharedTypes";
 
+interface TrackFilters {
+  query?: string;
+  artists?: string[];
+  years?: number[];
+  genres?: string[];
+}
+
+interface FacetOptions {
+  artists: string[];
+  years: number[];
+  genres: string[];
+}
+
+interface FilterableTrack extends TrackType {
+  title?: string;
+  artist?: string; 
+  performer?: string;
+  year?: number | string;
+  release_year?: number | string;
+  releaseYear?: number | string;
+  releaseDate?: string;
+  date?: string;
+  publishedAt?: string;
+  createdAt?: string;
+}
+
 const selectPlayList = (s: RootState) => s.tracks.playList;
 const selectShuffled = (s: RootState) => s.tracks.isShuffle;
 const selectShuffledPlayList = (s: RootState) => s.tracks.shuffledPlayList;
@@ -11,10 +37,12 @@ export const selectActiveList = createSelector(
   (isShuffle, list, shuffled) => (isShuffle ? shuffled : list)
 );
 
-const getArtist = (t: any) => t.artist ?? t.author ?? t.performer ?? "";
+const getArtist = (t: FilterableTrack): string => {
+  return t.artist || t.author || t.performer || "";
+};
 
-const getYear = (t: any): number | null => {
-  const cand = [
+const getYear = (t: FilterableTrack): number | null => {
+  const candidates = [
     t.year,
     t.release_year,
     t.releaseYear,
@@ -23,85 +51,112 @@ const getYear = (t: any): number | null => {
     t.date,
     t.publishedAt,
     t.createdAt,
-  ];
+  ].filter(Boolean);
 
-  for (const v of cand) {
-    if (typeof v === "number" && Number.isFinite(v)) return v;
-    if (typeof v === "string" && v) {
-      const m = v.match(/(\d{4})/);
-      if (m) {
-        const y = Number(m[1]);
-        if (y >= 1900 && y <= 2100) return y;
+  for (const value of candidates) {
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return value;
+    }
+    
+    if (typeof value === "string" && value) {
+      const yearMatch = value.match(/(\d{4})/);
+      if (yearMatch) {
+        const year = Number(yearMatch[1]);
+        if (year >= 1900 && year <= 2100) return year;
       }
-
-      const d = new Date(v);
-      if (!Number.isNaN(d.getTime())) {
-        const y = d.getFullYear();
-        if (y >= 1900 && y <= 2100) return y;
+      try {
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          const year = date.getFullYear();
+          if (year >= 1900 && year <= 2100) return year;
+        }
+      } catch {
       }
     }
   }
   return null;
 };
 
-const getGenres = (t: any): string[] =>
-  Array.isArray(t.genre) ? t.genre : t.genre ? [t.genre] : [];
+const getGenres = (t: FilterableTrack): string[] => {
+  if (Array.isArray(t.genre)) {
+    return t.genre.filter((g): g is string => typeof g === "string" && g !== "");
+  }
+  
+  if (typeof t.genre === "string" && t.genre) {
+    return [t.genre];
+  }
+  
+  return [];
+};
 
-const textMatch = (t: any, q: string) => {
-  if (!q) return true;
-  const low = q.trim().toLowerCase();
-  const fields = [t.name, t.title, getArtist(t), t.album].filter(Boolean);
-  return fields.some((v) => String(v).toLowerCase().includes(low));
+const textMatch = (t: FilterableTrack, query: string): boolean => {
+  if (!query) return true;
+  
+  const lowerQuery = query.trim().toLowerCase();
+  const fields = [
+    t.name,
+    t.title,
+    getArtist(t),
+    t.album
+  ].filter((field): field is string => typeof field === "string" && field !== "");
+  
+  return fields.some(field => field.toLowerCase().includes(lowerQuery));
 };
 
 export const selectVisibleTracks = createSelector(
-  [selectActiveList, (s: RootState) => s.tracks.filters],
-  (list, f) => {
-    const artistSet = new Set((f.artists ?? []).map(String));
-    const yearSet = new Set<number>(f.years ?? []);
-    const genreSet = new Set((f.genres ?? []).map((g) => g.toLowerCase()));
+  [selectActiveList, (s: RootState) => s.tracks.filters as TrackFilters],
+  (list, filters) => {
+    const artistSet = new Set((filters.artists ?? []).map(String));
+    const yearSet = new Set<number>(filters.years ?? []);
+    const genreSet = new Set((filters.genres ?? []).map(g => g.toLowerCase()));
 
-    return list.filter((t) => {
-      if (!textMatch(t, f.query ?? "")) return false;
+    return list.filter((t): t is TrackType => {
+      if (!textMatch(t, filters.query ?? "")) return false;
 
-      if (artistSet.size) {
-        const a = String(getArtist(t));
-        if (!artistSet.has(a)) return false;
+      if (artistSet.size > 0) {
+        const artist = String(getArtist(t));
+        if (!artistSet.has(artist)) return false;
       }
 
-      if (yearSet.size) {
-        const y = getYear(t);
-        if (y == null || !yearSet.has(y)) return false;
+      if (yearSet.size > 0) {
+        const year = getYear(t);
+        if (year === null || !yearSet.has(year)) return false;
       }
 
-      if (genreSet.size) {
-        const gs = getGenres(t).map((g) => String(g).toLowerCase());
-        if (!gs.length || !gs.some((g) => genreSet.has(g))) return false;
+      if (genreSet.size > 0) {
+        const trackGenres = getGenres(t).map(g => g.toLowerCase());
+        if (trackGenres.length === 0 || !trackGenres.some(g => genreSet.has(g))) {
+          return false;
+        }
       }
-
       return true;
     });
   }
 );
 
-export const selectFacetOptions = createSelector([selectActiveList], (list) => {
-  const artists = new Set<string>();
-  const years = new Set<number>();
-  const genres = new Set<string>();
+export const selectFacetOptions = createSelector(
+  [selectActiveList], 
+  (list): FacetOptions => {
+    const artists = new Set<string>();
+    const years = new Set<number>();
+    const genres = new Set<string>();
 
-  for (const t of list) {
-    const a = getArtist(t);
-    if (a) artists.add(String(a));
+    for (const track of list) {
+      const artist = getArtist(track);
+      if (artist) artists.add(artist);
 
-    const y = getYear(t);
-    if (typeof y === "number") years.add(y);
+      const year = getYear(track);
+      if (year !== null) years.add(year);
 
-    for (const g of getGenres(t)) if (g) genres.add(String(g));
+      for (const genre of getGenres(track)) {
+        if (genre) genres.add(genre);
+      }
+    }
+
+    return {
+      artists: Array.from(artists).sort((a, b) => a.localeCompare(b)),
+      years: Array.from(years).sort((a, b) => a - b),
+      genres: Array.from(genres).sort((a, b) => a.localeCompare(b)),
+    };
   }
-
-  return {
-    artists: Array.from(artists).sort((a, b) => a.localeCompare(b)),
-    years: Array.from(years).sort((a, b) => a - b),
-    genres: Array.from(genres).sort((a, b) => a.localeCompare(b)),
-  };
-});
+);

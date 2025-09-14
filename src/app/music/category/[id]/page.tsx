@@ -52,10 +52,6 @@ const CategoryPage = () => {
     dispatch(setCurrentTrackList(tracks));
   }, [tracks, dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(setCurrentPlaylist(getFilteredTracks(tracks, "all", filter)));
-  // }, [filter]);
-
   if (isLoading) {
     return <Loading />;
   }

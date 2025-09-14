@@ -1,5 +1,4 @@
 "use client";
-
 import styles from "./layout.module.css";
 import MainNav from "@components/MainNav/MainNav";
 import Bar from "@components/Bar/Bar";

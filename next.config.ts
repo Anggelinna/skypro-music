@@ -1,15 +1,11 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+module.exports = {
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/music/main',
+        source: "/",
+        destination: "/music/main",
         permanent: true,
       },
     ];
   },
 };
-
-export default nextConfig;
